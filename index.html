@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auth Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #3b82f6, #9333ea);
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .card {
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 400px;
+            padding: 20px;
+            color: #333333;
+        }
+
+        .tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .tabs button {
+            background: none;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            color: #333333;
+            font-weight: bold;
+        }
+
+        .tabs button.active {
+            border-bottom: 2px solid #3b82f6;
+            color: #3b82f6;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            font-size: 14px;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            font-size: 14px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 4px #3b82f6;
+        }
+
+        button {
+            background-color: #3b82f6;
+            color: #ffffff;
+            padding: 10px;
+            font-size: 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #2563eb;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .highlight {
+            color: #9333ea;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="tabs">
+            <button id="signInTab" class="active" onclick="switchTab('sign-in')">Sign In</button>
+            <button id="signUpTab" onclick="switchTab('sign-up')">Sign Up</button>
+        </div>
+        <div id="signInForm">
+            <form onsubmit="handleSignIn(event)">
+                <div class="form-group">
+                    <label for="signInEmail">Email</label>
+                    <input type="email" id="signInEmail" name="email" placeholder="Email" required />
+                </div>
+                <div class="form-group">
+                    <label for="signInPassword">Password</label>
+                    <input type="password" id="signInPassword" name="password" placeholder="Password" required />
+                </div>
+                <button type="submit">Sign In</button>
+            </form>
+        </div>
+        <div id="signUpForm" class="hidden">
+            <form onsubmit="handleSignUp(event)">
+                <div class="form-group">
+                    <label for="signUpName">Name</label>
+                    <input type="text" id="signUpName" name="name" placeholder="Name" required />
+                </div>
+                <div class="form-group">
+                    <label for="signUpEmail">Email</label>
+                    <input type="email" id="signUpEmail" name="email" placeholder="Email" required />
+                </div>
+                <div class="form-group">
+                    <label for="signUpPassword">Password</label>
+                    <input type="password" id="signUpPassword" name="password" placeholder="Password" required />
+                </div>
+                <button type="submit">Sign Up</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function switchTab(tab) {
+            const signInForm = document.getElementById('signInForm');
+            const signUpForm = document.getElementById('signUpForm');
+            const signInTab = document.getElementById('signInTab');
+            const signUpTab = document.getElementById('signUpTab');
+
+            if (tab === 'sign-in') {
+                signInForm.classList.remove('hidden');
+                signUpForm.classList.add('hidden');
+                signInTab.classList.add('active');
+                signUpTab.classList.remove('active');
+            } else {
+                signUpForm.classList.remove('hidden');
+                signInForm.classList.add('hidden');
+                signUpTab.classList.add('active');
+                signInTab.classList.remove('active');
+            }
+        }
+
+        function handleSignIn(event) {
+            event.preventDefault();
+            const email = document.getElementById('signInEmail').value;
+            const password = document.getElementById('signInPassword').value;
+            console.log('Sign In Data:', { email, password });
+        }
+
+        function handleSignUp(event) {
+            event.preventDefault();
+            const name = document.getElementById('signUpName').value;
+            const email = document.getElementById('signUpEmail').value;
+            const password = document.getElementById('signUpPassword').value;
+            console.log('Sign Up Data:', { name, email, password });
+        }
+    </script>
+</body>
+</html>
