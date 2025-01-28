@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout Page</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header class="header">
+        <h1>Checkout Page</h1>
+    </header>
+
+    <main class="checkout-form">
+        <form id="checkout-form">
+            <!-- Customer Details Section -->
+            <section class="customer-details">
+                <h2>Customer Details</h2>
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" placeholder="Enter your full name" required>
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email" required>
+
+                <label for="phone">Phone:</label>
+                <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" required>
+            </section>
+
+            <!-- Address Section -->
+            <section class="address-details">
+                <h2>Shipping Address</h2>
+                <label for="address">Address:</label>
+                <textarea id="address" name="address" rows="4" placeholder="Enter your shipping address" required></textarea>
+
+                <label for="city">City:</label>
+                <input type="text" id="city" name="city" placeholder="City" required>
+
+                <label for="zip">Zip Code:</label>
+                <input type="text" id="zip" name="zip" placeholder="Zip Code" required>
+            </section>
+
+            <!-- Payment Section -->
+            <section class="payment-details">
+                <h2>Payment Method</h2>
+                <label>
+                    <input type="radio" name="payment-method" value="credit-card" required> Credit Card
+                </label>
+                <label>
+                    <input type="radio" name="payment-method" value="paypal"> PayPal
+                </label>
+                <label>
+                    <input type="radio" name="payment-method" value="cash-on-delivery"> Cash on Delivery
+                </label>
+            </section>
+
+            <!-- Promo Code Section -->
+            <section class="promo-code">
+                <h2>Promo Code</h2>
+                <label for="promo">Enter Promo Code:</label>
+                <input type="text" id="promo" name="promo" placeholder="Promo Code">
+                <button type="button" id="apply-promo">Apply</button>
+            </section>
+
+            <button type="submit" class="submit-button">Place Order</button>
+        </form>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
