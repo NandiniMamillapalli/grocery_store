@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Grocery Store</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+            background: url('https://images.unsplash.com/photo-1516747504014-21f1b343ce06') center/cover no-repeat;
+        }
+
+        .categories-container, .brands-container {
+            background: rgba(255, 255, 255, 0.85);
+            padding: 40px 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            margin-bottom: 20px;
+        }
+
+        .categories-container h2, .brands-container h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #56ab2f;
+            font-weight: bold;
+        }
+
+        .categories-grid, .brands-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+        }
+
+        .category, .brand {
+            text-align: center;
+            width: 150px;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .category:hover, .brand:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .category img, .brand img {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            border: 3px solid #ddd;
+        }
+
+        .category h3, .brand h3 {
+            font-size: 1.4rem;
+            color: #56ab2f;
+            font-weight: bold;
+        }
+
+        .product-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .product {
+            width: 150px;
+            text-align: center;
+        }
+
+        .product img {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+
+        .product h4 {
+            font-size: 1.2rem;
+            color: #56ab2f;
+        }
+
+        .back-link {
+            margin-top: 20px;
+            color: #56ab2f;
+            font-size: 1.2rem;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Category Page -->
+        <div class="categories-container" id="categories-page">
+            <h2>Grocery Categories</h2>
+            <div class="categories-grid">
+                <div class="category" onclick="window.location.href='?category=snacks'">
+                    <img src="https://images-na.ssl-images-amazon.com/images/I/81FfpLMWNfL.jpg" alt="Snacks">
+                    <h3>Snacks</h3>
+                </div>
+                <div class="category" onclick="window.location.href='?category=veggies'">
+                    <img src="https://cdn.britannica.com/17/196817-050-6A15DAC3/vegetables.jpg" alt="Veggies">
+                    <h3>Veggies</h3>
+                </div>
+                <div class="category" onclick="window.location.href='?category=fruits'">
+                    <img src="https://th.bing.com/th/id/OIP.22XOhxYrd_Pu__NkrGadMgHaEo?rs=1&pid=ImgDetMain" alt="Fruits">
+                    <h3>Fruits</h3>
+                </div>
+                <div class="category" onclick="window.location.href='?category=dairy'">
+                    <img src="https://th.bing.com/th/id/OIP.6xdyMysk6K_Q6nOL0D5JzwHaE8?w=1024&h=683&rs=1&pid=ImgDetMain" alt="Dairy Products">
+                    <h3>Dairy Products</h3>
+                </div>
+                <div class="category" onclick="window.location.href='?category=others'">
+                    <img src="https://th.bing.com/th/id/OIP.3owRa-0XSt5ahQECrgittwHaLG?w=1068&h=1600&rs=1&pid=ImgDetMain" alt="Others">
+                    <h3>Others</h3>
+                </div>
+            </div>
+        </div>
+
+        <!-- Brand Page for Snacks -->
+        <div class="brands-container" id="brands-page" style="display:none;">
+            <h2 id="category-name">Select a Brand</h2>
+            <div class="brands-grid" id="brands-grid">
+                <!-- Brands will be dynamically inserted here -->
+            </div>
+            <a href="#" class="back-link" onclick="window.location.href='';">Back to Categories</a>
+        </div>
+
+        <!-- Product Page -->
+        <div id="products-page" style="display:none;">
+            <h2 id="brand-name">Loading...</h2>
+            <div class="product-grid" id="product-grid">
+                <!-- Product items will be dynamically inserted here -->
+            </div>
+            <a href="#" class="back-link" onclick="window.location.href='?category=snacks';">Back to Brands</a>
+        </div>
+    </div>
+
+    <script>
+        const products = {
+            snacks: {
+                lays: [
+                    { name: 'Lays Classic', img: 'https://via.placeholder.com/150' },
+                    { name: 'Lays Salted', img: 'https://via.placeholder.com/150' },
+                ],
+                bingo: [
+                    { name: 'Bingo Classic', img: 'https://via.placeholder.com/150' },
+                    { name: 'Bingo Tangy', img: 'https://via.placeholder.com/150' },
+                ],
+            },
+            veggies: [
+                { name: 'Carrot', img: 'https://via.placeholder.com/150' },
+                { name: 'Tomato', img: 'https://via.placeholder.com/150' },
+            ],
+            fruits: [
+                { name: 'Apple', img: 'https://via.placeholder.com/150' },
+                { name: 'Banana', img: 'https://via.placeholder.com/150' },
+            ],
+            dairy: [
+                { name: 'Milk', img: 'https://via.placeholder.com/150' },
+                { name: 'Cheese', img: 'https://via.placeholder.com/150' },
+            ],
+            others: [
+                { name: 'Detergent', img: 'https://via.placeholder.com/150' },
+                { name: 'Toothpaste', img: 'https://via.placeholder.com/150' },
+            ],
+        };
+
+        const categoryPage = document.getElementById('categories-page');
+        const brandsPage = document.getElementById('brands-page');
+        const productsPage = document.getElementById('products-page');
+        const categoryName = document.getElementById('category-name');
+        const brandsGrid = document.getElementById('brands-grid');
+        const productGrid = document.getElementById('product-grid');
+        const brandName = document.getElementById('brand-name');
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const category = urlParams.get('category');
+        const brand = urlParams.get('brand');
+
+        // Category Page
+        if (category && !brand) {
+            categoryPage.style.display = 'none';
+            brandsPage.style.display = 'block';
+
+            categoryName.textContent = `${category.charAt(0).toUpperCase() + category.slice(1)} Brands`;
+
+            if (category === 'snacks') {
+                const brands = ['lays', 'bingo'];
+                brands.forEach(brand => {
+                    const brandDiv = document.createElement('div');
+                    brandDiv.classList.add('brand');
+                    brandDiv.onclick = () => window.location.href = `?category=snacks&brand=${brand}`;
+
+                    const brandImg = document.createElement('img');
+                    brandImg.src = `https://via.placeholder.com/150?text=${brand.charAt(0).toUpperCase() + brand.slice(1)}`;
+                    brandDiv.appendChild(brandImg);
+
+                    const brandName = document.createElement('h3');
+                    brandName.textContent = brand.charAt(0).toUpperCase() + brand.slice(1);
+                    brandDiv.appendChild(brandName);
+
+                    brandsGrid.appendChild(brandDiv);
+                });
+            }
+        }
+
+        // Brand Page
+        if (brand && category) {
+            brandsPage.style.display = 'none';
+            productsPage.style.display = 'block';
+
+            brandName.textContent = `${brand.charAt(0).toUpperCase() + brand.slice(1)} Products`;
+
+            const productArray = products[category][brand];
+            productArray.forEach(product => {
+                const productDiv = document.createElement('div');
+                productDiv.classList.add('product');
+
+                const productImg = document.createElement('img');
+                productImg.src = product.img;
+                productDiv.appendChild(productImg);
+
+                const productName = document.createElement('h4');
+                productName.textContent = product.name;
+                productDiv.appendChild(productName);
+
+                productGrid.appendChild(productDiv);
+            });
+        }
+    </script>
+
+</body>
+</html>
