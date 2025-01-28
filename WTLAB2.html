@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Javascript</title>
+	<style>
+		body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        #content {
+            margin-top: 20px;
+        }
+        #myElement {
+            padding: 20px;
+            text-align: center;
+            margin-top: 20px;
+            border: 2px solid black;
+            transition: all 0.3s ease-in-out;
+        }
+        button {
+            margin: 5px;
+            padding: 10px 15px;
+            font-size: 16px;
+        }
+        #hoverElement {
+            padding: 20px;
+            text-align: center;
+            background-color: lightgray;
+            margin-top: 20px;
+            border: 2px solid black;
+            width: 200px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        button, input[type="submit"] {
+            margin: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+        #greeting {
+            margin-top: 20px;
+            font-size: 20px;
+            color: green;
+        }
+        form {
+            margin-top: 20px;
+        }
+        input {
+            margin: 5px 0;
+            padding: 10px;
+            width: 100%;
+            max-width: 300px;
+        }
+    </style>
+</head>
+<body>
+	<h6>Task1</h6>
+	<script type="text/javascript">
+		var Company_name="Tech Innovators"
+		console.log("Company_name(var)",Company_name)
+		let websiteVisits = 0;
+        console.log("Website Visits (let):", websiteVisits);
+        websiteVisits += 1;
+        console.log("Updated Website Visits (let):", websiteVisits);
+        const establishedYear = 2024;
+        console.log("Established Year (const):", establishedYear);
+	</script>
+	<h6>Task2</h6>
+	<script type="text/javascript">
+		//using function keyword and function call
+        function Greet(name) {
+            console.log("Hello, " + name + "! Welcome to our website.");
+        }
+        Greet("Aparna");
+        //use arrow function and arrow
+        const displayWelcomeMessage = (companyName) => {
+            console.log(`Welcome to ${companyName}! We're excited to have you here.`);
+        };
+        displayWelcomeMessage("Tech Innovators");
+
+        //Functions for mathematical operations
+       // Addition
+       function add(a, b) {
+           return a + b;
+        }
+       console.log("Addition (5 + 3):", add(5, 3));
+      // Subtraction
+      const subtract = (a, b) => a - b;
+       console.log("Subtraction (10 - 6):", subtract(10, 6));
+     // Multiplication
+      function multiply(a, b) {
+        return a * b;
+       }
+       console.log("Multiplication (4 * 7):", multiply(4, 7));
+	</script>
+	<h6>Task3</h6>
+	<script type="text/javascript">
+		//alert()
+        alert("Welcome to our website!");
+       //prompt()
+       const userName = prompt("What's your name?");
+        if (userName) {
+           alert(`Hello, ${userName}! Nice to meet you.`);
+        } 
+        else {
+           alert("Can you please enter your name");
+        }
+      //console.log() 
+       console.log("User's name:", userName);
+       const age = prompt("How old are you?");
+       if (age) {
+          const message = `you're ${age} years old!`;
+          alert(message);
+          console.log("User's age:", age);
+        } 
+        else {
+        console.log("User didn't enter their age.");
+        }
+	</script>
+	 <h6>Task4</h6>
+    <p id="paragraph">This is the original paragraph content.</p>
+    <button onclick="changeParagraphText()">Change Text</button>
+    <button onclick="addContent()">Add Content</button>
+    <button onclick="removeContent()">Remove Content</button>
+    <div id="content"></div>
+    <script type="text/javascript">
+     // Change the text of the paragraph
+function changeParagraphText() {
+    const paragraph = document.getElementById("paragraph");
+    paragraph.textContent = "The paragraph text has been changed!";
+}
+
+// Dynamically add new content to the page
+function addContent() {
+    const contentDiv = document.getElementById("content");
+    const newElement = document.createElement("p");
+    newElement.textContent = "This is a dynamically added paragraph.";
+    contentDiv.appendChild(newElement);
+}
+
+// Dynamically remove the last added content from the page
+function removeContent() {
+    const contentDiv = document.getElementById("content");
+    if (contentDiv.lastChild) {
+        contentDiv.removeChild(contentDiv.lastChild);
+    } else {
+        alert("No more content to remove!");
+    }
+}
+</script>
+    <h6>Task5</h6>
+    <p id="myElement">This is the element to be styled dynamically!</p>
+    <button onclick="changeStyle()">Change Style</button>
+    <button onclick="toggleStyle()">Toggle Style</button>
+
+    <script>
+        // Function to change the style of the element
+        function changeStyle() {
+            const element = document.getElementById("myElement");
+            element.style.color = "white";
+            element.style.backgroundColor = "teal";
+            element.style.fontSize = "20px";
+            element.style.borderRadius = "10px";
+            element.style.padding = "30px";
+        }
+        // Function to toggle between two styles for the element
+        let isStyleOne = true;
+        function toggleStyle() {
+            const element = document.getElementById("myElement");
+            if (isStyleOne) {
+                element.style.color = "black";
+                element.style.backgroundColor = "lightyellow";
+                element.style.fontSize = "24px";
+                element.style.border = "3px dashed red";
+                element.style.padding = "25px";
+            } else {
+                element.style.color = "white";
+                element.style.backgroundColor = "teal";
+                element.style.fontSize = "20px";
+                element.style.border = "2px solid black";
+                element.style.padding = "30px";
+            }
+            isStyleOne = !isStyleOne; // Toggle the flag
+        }
+    </script>
+    <h6>Task6</h6>
+    <!-- Button with onclick event -->
+    <button onclick="handleClick()">Click Me</button>
+    <!-- Element with mouseover and mouseout events -->
+    <div id="hoverElement" 
+         onmouseover="handleMouseOver()" 
+         onmouseout="handleMouseOut()">
+        Hover over me!
+    </div>
+
+    <!-- Form with onsubmit event -->
+    <form onsubmit="handleFormSubmit(event)">
+        <label for="inputField">Enter something:</label>
+        <input type="text" id="inputField" required>
+        <input type="submit" value="Submit">
+    </form>
+
+    <script>
+        // Function for the onclick event
+        function handleClick() {
+            alert("Button clicked!");
+        }
+
+        // Function for the mouseover event
+        function handleMouseOver() {
+            const hoverElement = document.getElementById("hoverElement");
+            hoverElement.style.backgroundColor = "blue";
+            hoverElement.style.color = "white";
+        }
+        // Function for the mouseout event
+        function handleMouseOut() {
+            const hoverElement = document.getElementById("hoverElement");
+            hoverElement.style.backgroundColor = "lightgray";
+            hoverElement.style.color = "black";
+        }
+        // Function for the onsubmit event
+        function handleFormSubmit(event) {
+            event.preventDefault(); // Prevent the form from submitting
+            console.log("Form submitted! Value:", document.getElementById("inputField").value);
+            alert("Form submitted successfully!");
+        }
+    </script>
+    <h6>Task7</h6>
+    <script>
+        // Prompt user for their name
+        const usrName = prompt("What is your name?");
+        const greetingElement = document.createElement("div");
+        greetingElement.id = "greeting";
+        greetingElement.textContent = `Hello, ${usrName}! Welcome to the webpage!`;
+        document.body.appendChild(greetingElement);
+    </script>
+    <!-- Form for user input -->
+    <form id="myForm" onsubmit="return validateForm()">
+        <label for="email">Email:</label>
+        <input type="email" id="email" required placeholder="Enter your email" />
+        <label for="age">Age:</label>
+        <input type="number" id="age" required placeholder="Enter your age" min="1" />
+        <input type="submit" value="Submit" />
+    </form>
+    <button onclick="printPage()">Print Page</button>
+    <script>
+        // Function to validate form input
+        function validateForm() {
+            const email = document.getElementById("email").value;
+            const age = document.getElementById("age").value;
+
+            if (!email.includes('@')) {
+                alert("Please enter a valid email address.");
+                return false; // Prevent form submission
+            }
+
+            if (age < 1) {
+                alert("Please enter a valid age.");
+                return false; // Prevent form submission
+            }
+
+            alert("Form submitted successfully!");
+            return true; // Allow form submission
+        }
+
+        // Function to trigger print dialog
+        function printPage() {
+            window.print();
+        }
+    </script>
+</body>
+</html>
+
+
+
+</body>
+</html>
