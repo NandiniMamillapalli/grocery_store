@@ -24,12 +24,14 @@
             max-width: 400px;
             padding: 20px;
             color: #333333;
+            text-align: center;
         }
 
         .tabs {
             display: flex;
             justify-content: center;
             margin-bottom: 20px;
+            gap: 10px;
         }
 
         .tabs button {
@@ -41,6 +43,7 @@
             border-bottom: 2px solid transparent;
             color: #333333;
             font-weight: bold;
+            transition: all 0.3s ease;
         }
 
         .tabs button.active {
@@ -51,16 +54,24 @@
         form {
             display: flex;
             flex-direction: column;
+            transition: opacity 0.3s ease-in-out;
         }
 
         .form-group {
             margin-bottom: 15px;
+            text-align: left;
         }
 
         label {
             font-size: 14px;
             margin-bottom: 5px;
             display: block;
+        }
+
+        .input-group {
+            display: flex;
+            align-items: center;
+            position: relative;
         }
 
         input {
@@ -71,10 +82,12 @@
             border-radius: 6px;
         }
 
-        input:focus {
-            outline: none;
-            border-color: #3b82f6;
-            box-shadow: 0 0 4px #3b82f6;
+        .toggle-password {
+            position: absolute;
+            right: 10px;
+            cursor: pointer;
+            font-size: 14px;
+            color: #3b82f6;
         }
 
         button {
@@ -96,9 +109,6 @@
             display: none;
         }
 
-        .highlight {
-            color: #9333ea;
-        }
     </style>
 </head>
 <body>
@@ -115,7 +125,10 @@
                 </div>
                 <div class="form-group">
                     <label for="signInPassword">Password</label>
-                    <input type="password" id="signInPassword" name="password" placeholder="Password" required />
+                    <div class="input-group">
+                        <input type="password" id="signInPassword" name="password" placeholder="Password" required />
+                        <span class="toggle-password" onclick="togglePassword('signInPassword')">👁</span>
+                    </div>
                 </div>
                 <button type="submit">Sign In</button>
             </form>
@@ -132,7 +145,10 @@
                 </div>
                 <div class="form-group">
                     <label for="signUpPassword">Password</label>
-                    <input type="password" id="signUpPassword" name="password" placeholder="Password" required />
+                    <div class="input-group">
+                        <input type="password" id="signUpPassword" name="password" placeholder="Password" required />
+                        <span class="toggle-password" onclick="togglePassword('signUpPassword')">👁</span>
+                    </div>
                 </div>
                 <button type="submit">Sign Up</button>
             </form>
@@ -141,29 +157,22 @@
 
     <script>
         function switchTab(tab) {
-            const signInForm = document.getElementById('signInForm');
-            const signUpForm = document.getElementById('signUpForm');
-            const signInTab = document.getElementById('signInTab');
-            const signUpTab = document.getElementById('signUpTab');
+            document.getElementById('signInForm').classList.toggle('hidden', tab !== 'sign-in');
+            document.getElementById('signUpForm').classList.toggle('hidden', tab !== 'sign-up');
+            document.getElementById('signInTab').classList.toggle('active', tab === 'sign-in');
+            document.getElementById('signUpTab').classList.toggle('active', tab === 'sign-up');
+        }
 
-            if (tab === 'sign-in') {
-                signInForm.classList.remove('hidden');
-                signUpForm.classList.add('hidden');
-                signInTab.classList.add('active');
-                signUpTab.classList.remove('active');
-            } else {
-                signUpForm.classList.remove('hidden');
-                signInForm.classList.add('hidden');
-                signUpTab.classList.add('active');
-                signInTab.classList.remove('active');
-            }
+        function togglePassword(id) {
+            const input = document.getElementById(id);
+            input.type = input.type === 'password' ? 'text' : 'password';
         }
 
         function handleSignIn(event) {
             event.preventDefault();
             const email = document.getElementById('signInEmail').value;
             const password = document.getElementById('signInPassword').value;
-            console.log('Sign In Data:', { email, password });
+            alert(`Sign In Successful! Email: ${email}`);
         }
 
         function handleSignUp(event) {
@@ -171,7 +180,7 @@
             const name = document.getElementById('signUpName').value;
             const email = document.getElementById('signUpEmail').value;
             const password = document.getElementById('signUpPassword').value;
-            console.log('Sign Up Data:', { name, email, password });
+            alert(`Sign Up Successful! Welcome, ${name}`);
         }
     </script>
 </body>
