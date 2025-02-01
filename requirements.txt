@@ -6,3 +6,5 @@ Implement account creation, login, and password recovery features in a user-frie
 Backend Tasks:
 Set up and manage the user authentication system (login, registration, password management) with secure protocols.
 Implement APIs for user login, retrieving order history, and updating user details.
+Nodejs for backend development 
+
