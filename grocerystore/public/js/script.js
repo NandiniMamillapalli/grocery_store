@@ -906,6 +906,30 @@ function searchProducts() {
     displayProducts(filteredProducts);
 }
 
+document.getElementById('sortSelect').addEventListener('change', function() {
+    const selectedOption = this.value;
+    let sortedProducts;
+
+    switch (selectedOption) {
+        case 'priceAsc':
+            sortedProducts = [...products].sort((a, b) => a.price - b.price);
+            break;
+        case 'priceDesc':
+            sortedProducts = [...products].sort((a, b) => b.price - a.price);
+            break;
+        case 'ratingAsc':
+            sortedProducts = [...products].sort((a, b) => a.rating - b.rating);
+            break;
+        case 'ratingDesc':
+            sortedProducts = [...products].sort((a, b) => b.rating - a.rating);
+            break;
+        default:
+            sortedProducts = products;
+    }
+
+    displayProducts(sortedProducts);
+});
+
 // Cart functions
 function addToCart(productId) {
     const currentUser = localStorage.getItem('currentUser');
@@ -1420,29 +1444,6 @@ function applyFilters() {
     displayProducts(filteredProducts);
 }
 
-document.getElementById('sortSelect').addEventListener('change', function() {
-    const selectedOption = this.value;
-    let sortedProducts;
-
-    switch (selectedOption) {
-        case 'priceAsc':
-            sortedProducts = [...products].sort((a, b) => a.price - b.price);
-            break;
-        case 'priceDesc':
-            sortedProducts = [...products].sort((a, b) => b.price - a.price);
-            break;
-        case 'ratingAsc':
-            sortedProducts = [...products].sort((a, b) => a.rating - b.rating);
-            break;
-        case 'ratingDesc':
-            sortedProducts = [...products].sort((a, b) => b.rating - a.rating);
-            break;
-        default:
-            sortedProducts = products;
-    }
-
-    displayProducts(sortedProducts);
-});
 
 function updateLoginStatus() {
     const loginBtn = document.querySelector('.login-btn');

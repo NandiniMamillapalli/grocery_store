@@ -1,10 +1,10 @@
 <?php
 // Include the header
-require_once __DIR__ . '/../partials/header.php';
+require_once __DIR__ . '/../partials/Mainheader.php';
 
 // Check if user is logged in
 if (!isset($_SESSION['user_id'])) {
-    header('Location: /login');
+    header('Location: ' . $base_url . '/login.php');
     exit;
 }
 
