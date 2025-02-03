@@ -1,0 +1,205 @@
+<?php
+session_start();
+
+// Check if user is logged in
+if (!isset($_SESSION['user_id'])) {
+    header('Location: index.php');
+    exit;
+}
+
+require_once 'config/db.php';
+
+// Get user details
+$stmt = $conn->prepare("SELECT username, email FROM users WHERE id = ?");
+$stmt->execute([$_SESSION['user_id']]);
+$user = $stmt->fetch(PDO::FETCH_ASSOC);
+?>
+
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - Fresh Mart</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="profile-page">
+    <header>
+        
+        <nav class="navbar">
+            <div class="logo">Fresh Mart</div>
+            <div class="nav-links">
+                <a href="index.php">Home</a>
+                <a href="products.html">Products</a>
+                <a href="about.html">About</a>
+                <a href="contact.html">Contact</a>
+                <a href="profile.php" class="active">Profile</a>
+                <button class="theme-toggle" onclick="toggleTheme()">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <a href="cart.html" class="cart-icon">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count">0</span>
+                </a>
+            </div>
+            <button onclick="logout()" class="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+        </nav>
+    </header>
+
+    <main class="profile-page">
+        <div class="profile-container">
+            <!-- User Info Section -->
+            <section class="profile-section user-info">
+                <div class="profile-header">
+                    <div class="profile-avatar">
+                        <img id="userAvatar" src="https://images.unsplash.com/photo-1633332755192-727a05c4013d" alt="Profile Picture">
+                        <button class="edit-avatar" onclick="editAvatar()">
+                            <i class="fas fa-camera"></i>
+                        </button>
+                    </div>
+                    <div class="profile-details">
+                        <h2><?php echo htmlspecialchars($user['username']); ?></h2>
+                        <p class="user-email"><?php echo htmlspecialchars($user['email']); ?></p>
+                        <button class="edit-profile-btn" onclick="editProfile()">
+                            Edit Profile
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Loyalty Status Section -->
+            <section class="profile-section loyalty-status">
+                <h2>Loyalty Status</h2>
+                <div class="loyalty-card">
+                    <div class="loyalty-tier">
+                        <span class="tier-badge" id="userTier">Gold</span>
+                        <span class="points" id="userPoints">5,240 points</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress" id="tierProgress"></div>
+                    </div>
+                    <p class="next-tier" id="nextTierInfo">760 points to Platinum</p>
+                </div>
+                <div class="points-history">
+                    <h3>Points History</h3>
+                    <div id="pointsHistoryList" class="history-list">
+                        <!-- Points history will be populated here -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Order History Section -->
+            <section class="profile-section order-history">
+                <h2>Order History</h2>
+                <div class="orders-list" id="ordersList">
+                    <!-- Order history will be populated here -->
+                </div>
+            </section>
+
+            <!-- Preferences Section -->
+            <section class="profile-section preferences">
+                <h2>Preferences</h2>
+                <div class="preference-options">
+                    <div class="preference-group">
+                        <h3>Dietary Preferences</h3>
+                        <div class="checkbox-group">
+                            <label><input type="checkbox" name="dietary" value="vegetarian"> Vegetarian</label>
+                            <label><input type="checkbox" name="dietary" value="vegan"> Vegan</label>
+                            <label><input type="checkbox" name="dietary" value="gluten-free"> Gluten-Free</label>
+                            <label><input type="checkbox" name="dietary" value="dairy-free"> Dairy-Free</label>
+                        </div>
+                    </div>
+                    <div class="preference-group">
+                        <h3>Notification Settings</h3>
+                        <div class="checkbox-group">
+                            <label><input type="checkbox" name="notifications" value="orders"> Order Updates</label>
+                            <label><input type="checkbox" name="notifications" value="deals"> Special Deals</label>
+                            <label><input type="checkbox" name="notifications" value="points"> Points Updates</label>
+                            <label><input type="checkbox" name="notifications" value="newsletter"> Newsletter</label>
+                        </div>
+                    </div>
+                </div>
+                <button class="save-preferences-btn" onclick="savePreferences()">Save Preferences</button>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <p>Email: support@freshmart.com</p>
+                <p>Phone: (555) 123-4567</p>
+            </div>
+            <div class="footer-section">
+                <h3>Follow Us</h3>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>Newsletter</h3>
+                <form class="newsletter-form">
+                    <input type="email" placeholder="Enter your email">
+                    <button type="submit">Subscribe</button>
+                </form>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Fresh Mart. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Update password
+        document.getElementById('updateProfileForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const newPassword = document.getElementById('newPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            if (newPassword !== confirmPassword) {
+                alert('Passwords do not match');
+                return;
+            }
+
+        //     try {
+        //         const response = await fetch('update_profile.php', {
+        //             method: 'POST',
+        //             headers: {
+        //                 'Content-Type': 'application/json',
+        //             },
+        //             body: JSON.stringify({
+        //                 newPassword: newPassword
+        //             })
+        //         });
+
+        //         const data = await response.json();
+        //         if (data.success) {
+        //             alert('Password updated successfully');
+        //             document.getElementById('updateProfileForm').reset();
+        //         } else {
+        //             alert(data.error || 'Failed to update password');
+        //         }
+        //     } catch (error) {
+        //         alert('An error occurred');
+        //     }
+        // });
+
+        // Logout function
+        async function logout() {
+            try {
+                await fetch('logout.php');
+                window.location.href = 'index.php';
+            } catch (error) {
+                alert('Failed to logout');
+            }
+        }
+    </script>
+</body>
+</html>
