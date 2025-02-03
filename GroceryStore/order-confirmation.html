@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmation - Fresh Mart</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">Fresh Mart</div>
+            <div class="nav-links">
+                <button class="theme-toggle" onclick="toggleTheme()">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <main class="confirmation-page">
+        <div class="container">
+            <div class="checkout-progress">
+                <div class="progress-step completed">
+                    <div class="step-number"><i class="fas fa-check"></i></div>
+                    <span>Shipping</span>
+                </div>
+                <div class="progress-line completed"></div>
+                <div class="progress-step completed">
+                    <div class="step-number"><i class="fas fa-check"></i></div>
+                    <span>Payment</span>
+                </div>
+                <div class="progress-line completed"></div>
+                <div class="progress-step completed">
+                    <div class="step-number"><i class="fas fa-check"></i></div>
+                    <span>Confirmation</span>
+                </div>
+            </div>
+
+            <div class="confirmation-content">
+                <div class="success-message">
+                    <div class="success-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <h1>Thank You for Your Order!</h1>
+                    <p>Your order has been successfully placed and will be delivered soon.</p>
+                    <div class="order-number">
+                        Order #: <span>FM123456789</span>
+                    </div>
+                </div>
+
+                <div class="order-details">
+                    <div class="details-section">
+                        <h2>Order Details</h2>
+                        <div class="order-items">
+                            <div class="order-item">
+                                <img src="https://images.unsplash.com/photo-1481349518771-20055b2a7b24" alt="Organic Bananas">
+                                <div class="item-details">
+                                    <h4>Organic Bananas</h4>
+                                    <p>Quantity: 1</p>
+                                    <p>$4.99</p>
+                                </div>
+                            </div>
+                            <div class="order-item">
+                                <img src="https://images.unsplash.com/photo-1466551773139-90579850b896" alt="Fresh Apples">
+                                <div class="item-details">
+                                    <h4>Fresh Apples</h4>
+                                    <p>Quantity: 2</p>
+                                    <p>$7.98</p>
+                                </div>
+                            </div>
+                            <div class="order-item">
+                                <img src="https://images.unsplash.com/photo-1598170845058-32b9d6a5da37" alt="Organic Milk">
+                                <div class="item-details">
+                                    <h4>Organic Milk</h4>
+                                    <p>Quantity: 1</p>
+                                    <p>$5.99</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="details-grid">
+                        <div class="shipping-details">
+                            <h3>Shipping Details</h3>
+                            <p><strong>John Doe</strong></p>
+                            <p>123 Main Street</p>
+                            <p>Apt 4B</p>
+                            <p>New York, NY 10001</p>
+                            <p>United States</p>
+                            <p>Phone: (555) 123-4567</p>
+                        </div>
+
+                        <div class="delivery-details">
+                            <h3>Delivery Information</h3>
+                            <div class="delivery-info">
+                                <p><strong>Estimated Delivery:</strong></p>
+                                <p>February 2, 2025</p>
+                                <p><strong>Shipping Method:</strong></p>
+                                <p>Standard Delivery</p>
+                            </div>
+                        </div>
+
+                        <div class="payment-details">
+                            <h3>Payment Information</h3>
+                            <div class="payment-info">
+                                <p><i class="fas fa-credit-card"></i> Credit Card ending in 3456</p>
+                                <div class="payment-breakdown">
+                                    <div class="payment-row">
+                                        <span>Subtotal:</span>
+                                        <span>$18.96</span>
+                                    </div>
+                                    <div class="payment-row">
+                                        <span>Shipping:</span>
+                                        <span>$4.99</span>
+                                    </div>
+                                    <div class="payment-row">
+                                        <span>Discount:</span>
+                                        <span>-$1.00</span>
+                                    </div>
+                                    <div class="payment-row total">
+                                        <span>Total:</span>
+                                        <span>$22.95</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="next-steps">
+                    <h2>What's Next?</h2>
+                    <div class="steps-grid">
+                        <div class="step-card">
+                            <i class="fas fa-envelope"></i>
+                            <h3>Order Confirmation Email</h3>
+                            <p>We've sent a confirmation email to john.doe@email.com</p>
+                        </div>
+                        <div class="step-card">
+                            <i class="fas fa-truck"></i>
+                            <h3>Track Your Order</h3>
+                            <p>You'll receive tracking information once your order ships</p>
+                        </div>
+                        <div class="step-card">
+                            <i class="fas fa-headset"></i>
+                            <h3>Need Help?</h3>
+                            <p>Our customer service team is here to assist you</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    <a href="index.html" class="continue-shopping">
+                        Continue Shopping
+                    </a>
+                    <button class="track-order">
+                        Track Order
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <p>Email: support@freshmart.com</p>
+                <p>Phone: (555) 123-4567</p>
+            </div>
+            <div class="footer-section">
+                <h3>Follow Us</h3>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>Download Our App</h3>
+                <div class="app-links">
+                    <a href="#" class="app-button">
+                        <i class="fab fa-apple"></i> App Store
+                    </a>
+                    <a href="#" class="app-button">
+                        <i class="fab fa-google-play"></i> Google Play
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Fresh Mart. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
