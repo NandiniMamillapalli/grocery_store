@@ -90,6 +90,82 @@
         #loginModal .close:hover {
             color: #f1f1f1;
         }
+        /* Ensure styles apply only to the #locationModal */
+    #locationModal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        justify-content: center;
+        align-items: center;
+    }
+
+    /* Style for the modal content */
+    #locationModal .modal-content {
+        background: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        text-align: center;
+        width: 90%;
+        max-width: 400px;
+        position: relative;
+        animation: fadeIn 0.3s ease-in-out;
+    }
+
+    /* Animation for modal appearance */
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(-20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Modal header styling */
+    #locationModal .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 18px;
+    }
+
+    /* Close button */
+    #locationModal .close {
+        cursor: pointer;
+        font-size: 24px;
+    }
+
+    /* Input field */
+    #locationModal input {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    /* Button styling */
+    #locationModal button {
+        width: 100%;
+        padding: 10px;
+        background: #007bff;
+        color: white;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    #locationModal button:hover {
+        background: #0056b3;
+    }
+
+    /* Selected location text */
+    #locationModal #selectedLocation {
+        margin-top: 10px;
+        font-weight: bold;
+    }
+
     </style>
 </head>
 <body>
@@ -141,8 +217,7 @@
         </nav>
     </header>
 
-    <div id="sidebarOverlay" class="sidebar-overlay"></div>
-
+    
     <main>
         <div class="sort-options">
             <h3>Sort By:</h3>
@@ -189,6 +264,7 @@
         </div>
     </div>
 
+ 
      <!-- Login Modal -->
      <div id="loginModal" class="modal">
         <div class="modal-content">
@@ -199,7 +275,7 @@
             <div id="loginForm" class="auth-form">
                 <input type="text" placeholder="Username" id="loginUsername" required>
                 <input type="password" placeholder="Password" id="loginPassword" required>
-                <button onclick="loginUser()">Login</button>
+                <button id="loginBtn">Login</button>
                 <p>Not registered? <a href="#" onclick="toggleAuthForms()">Register here</a></p>
             </div>
             <div id="registrationForm" class="auth-form" style="display:none;">
@@ -226,21 +302,28 @@
         </div>
     </div>
 
-    <!-- Location Picker Modal -->
-    <div id="locationModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>Select Your Location</h2>
-                <span class="close" onclick="toggleLocationPicker()">&times;</span>
-            </div>
-            <div class="location-form">
-                <input type="text" id="locationSearch" placeholder="Enter your address">
-                <div id="locationSuggestions">
-                    <!-- Location suggestions will be displayed here -->
-                </div>
-            </div>
+    
+html
+Copy
+Edit
+<!-- Location Picker Modal -->
+<div id="locationModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Select Your Location</h2>
+            <span class="close" onclick="toggleLocationPicker()">&times;</span>
         </div>
+
+        <div class="location-form">
+            <input type="text" id="locationSearch" placeholder="Enter your address">
+            <div id="locationSuggestions"></div>
+
+            <button onclick="useCurrentLocation()">📍 Use Current Location</button>
+        </div>
+
+        <p id="selectedLocation"></p>
     </div>
+</div>
 
     <!-- Inventory Alert Modal -->
     <div id="inventoryModal" class="modal">
@@ -299,22 +382,17 @@
         </div>
     </footer>
 
+    
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places&callback=initAutocomplete" async defer></script>
     <script src="script.js"></script>
-    <script src="auth.js"></script>
+    <script  src="auth.js"></script>
     <script>
+        
         document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('loginForm').style.display = 'block';
             document.getElementById('registrationForm').style.display = 'none';
         });
 
-        async function logout() {
-            try {
-                await fetch('logout.php');
-                window.location.href = 'index.php';
-            } catch (error) {
-                alert('Failed to logout');
-            }
-        }
 
         function toggleTheme() {
             const html = document.documentElement;
@@ -324,38 +402,8 @@
                 html.setAttribute('data-theme', 'light');
             }
         }
-    </script>
-    <script>
-        let users = {};
 
-        function loginUser() {
-            const username = document.getElementById('loginUsername').value;
-            const password = document.getElementById('loginPassword').value;
 
-            if (users[username] && users[username] === password) {
-                alert('Login successful!');
-                // Proceed with login actions
-            } else {
-                alert('Invalid username or password.');
-            }
-        }
-
-        function registerUser() {
-            const username = document.getElementById('registerUsername').value;
-            const email = document.getElementById('registerEmail').value;
-            const password = document.getElementById('registerPassword').value;
-            const confirmPassword = document.getElementById('registerConfirmPassword').value;
-
-            if (users[username]) {
-                alert('Username already exists.');
-            } else if (password !== confirmPassword) {
-                alert('Passwords do not match.');
-            } else {
-                users[username] = password;
-                alert('Registration successful! You can now log in.');
-                toggleAuthForms();
-            }
-        }
 
         function toggleAuthForms() {
             const loginForm = document.getElementById('loginForm');
@@ -371,6 +419,39 @@
                 authTitle.textContent = 'Register';
             }
         }
+
+        function toggleLocationPicker() {
+        const modal = document.getElementById("locationModal");
+        modal.style.display = modal.style.display === "flex" ? "none" : "flex";
+    }
+
+    function useCurrentLocation() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    const lat = position.coords.latitude;
+                    const lng = position.coords.longitude;
+                    document.getElementById("selectedLocation").innerHTML = `Latitude: ${lat}, Longitude: ${lng}`;
+                    localStorage.setItem("userLocation", `${lat}, ${lng}`);
+                },
+                () => alert("Location access denied.")
+            );
+        } else {
+            alert("Geolocation not supported by this browser.");
+        }
+    }
+
+    // Google Places API Autocomplete
+    function initAutocomplete() {
+        const input = document.getElementById("locationSearch");
+        const autocomplete = new google.maps.places.Autocomplete(input);
+
+        autocomplete.addListener("place_changed", () => {
+            const place = autocomplete.getPlace();
+            document.getElementById("selectedLocation").innerHTML = `Selected: ${place.formatted_address}`;
+            localStorage.setItem("userLocation", place.formatted_address);
+        });
+    }
     </script>
 
 </body>

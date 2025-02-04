@@ -23,10 +23,11 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
     <title>My Profile - Fresh Mart</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="script.js"></script>
+    <script  src="auth.js"></script>
 </head>
 <body class="profile-page">
     <header>
-        
         <nav class="navbar">
             <div class="logo">Fresh Mart</div>
             <div class="nav-links">
@@ -43,7 +44,7 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
                     <span class="cart-count">0</span>
                 </a>
             </div>
-            <button onclick="logout()" class="logout-btn">
+            <button id="plogoutBtn" class="logout-btn" onclick="logout()">
                     <i class="fas fa-sign-out-alt"></i> Logout
             </button>
         </nav>
@@ -61,11 +62,9 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
                         </button>
                     </div>
                     <div class="profile-details">
-                        <h2><?php echo htmlspecialchars($user['username']); ?></h2>
-                        <p class="user-email"><?php echo htmlspecialchars($user['email']); ?></p>
-                        <button class="edit-profile-btn" onclick="editProfile()">
-                            Edit Profile
-                        </button>
+                        <h2 id="profileUser"><?= htmlspecialchars($user['username']); ?></h2>
+                        <p id="profileEmail"><?= htmlspecialchars($user['email']); ?></p>
+                        <!-- <button class="edit-profile-btn" onclick="editProfile()">Edit Profile</button> -->
                     </div>
                 </div>
             </section>
@@ -155,51 +154,6 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
         </div>
     </footer>
 
-    <script src="script.js"></script>
-    <script>
-        // Update password
-        document.getElementById('updateProfileForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
-            const newPassword = document.getElementById('newPassword').value;
-            const confirmPassword = document.getElementById('confirmPassword').value;
-
-            if (newPassword !== confirmPassword) {
-                alert('Passwords do not match');
-                return;
-            }
-
-        //     try {
-        //         const response = await fetch('update_profile.php', {
-        //             method: 'POST',
-        //             headers: {
-        //                 'Content-Type': 'application/json',
-        //             },
-        //             body: JSON.stringify({
-        //                 newPassword: newPassword
-        //             })
-        //         });
-
-        //         const data = await response.json();
-        //         if (data.success) {
-        //             alert('Password updated successfully');
-        //             document.getElementById('updateProfileForm').reset();
-        //         } else {
-        //             alert(data.error || 'Failed to update password');
-        //         }
-        //     } catch (error) {
-        //         alert('An error occurred');
-        //     }
-        // });
-
-        // Logout function
-        async function logout() {
-            try {
-                await fetch('logout.php');
-                window.location.href = 'index.php';
-            } catch (error) {
-                alert('Failed to logout');
-            }
-        }
-    </script>
+    
 </body>
 </html>
