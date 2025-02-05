@@ -941,6 +941,8 @@ function updateCartCount() {
     cartCount.textContent = totalItems;
 }
 
+window.updateCartCount = updateCartCount;
+
 function toggleCart() {
     const modal = document.getElementById('cartModal');
     modal.style.display = modal.style.display === 'block' ? 'none' : 'block';
@@ -1165,9 +1167,10 @@ function toggleLoginForm() {
     }
 }
 
-let users = JSON.parse(localStorage.getItem('users')) || {};
 
-function loginUser() {
+/*
+function lloginUser() {
+    console.log("lloginUser()")
     const username = document.getElementById('loginUsername').value;
     const password = document.getElementById('loginPassword').value;
 
@@ -1183,16 +1186,16 @@ function loginUser() {
     }
 
     if (users[username] === password) {
-        localStorage.setItem('currentUser', username);
-        alert('Login successful!');
-        document.getElementById('loginModal').style.display = 'none';
-        updateLoginStatus();
+        
+        
+        
     } else {
         alert('Invalid password.');
     }
 }
 
-function registerUser() {
+function lregisterUser() {
+    console.log("lregisterUser()")
     const username = document.getElementById('registerUsername').value;
     const password = document.getElementById('registerPassword').value;
 
@@ -1211,6 +1214,7 @@ function registerUser() {
     }
 }
 
+
 function toggleAuthForms() {
     const loginForm = document.getElementById('loginForm');
     const registrationForm = document.getElementById('registrationForm');
@@ -1226,6 +1230,7 @@ function toggleAuthForms() {
         authTitle.textContent = 'Register';
     }
 }
+*/
 
 // Checkout function
 function checkout() {
@@ -1444,24 +1449,6 @@ document.getElementById('sortSelect').addEventListener('change', function() {
     displayProducts(sortedProducts);
 });
 
-function updateLoginStatus() {
-    const loginBtn = document.querySelector('.login-btn');
-    const currentUser = localStorage.getItem('currentUser');
-    
-    if (currentUser) {
-        loginBtn.textContent = 'Logout';
-        loginBtn.onclick = logout;
-    } else {
-        loginBtn.textContent = 'Login';
-        loginBtn.onclick = toggleLoginForm;
-    }
-}
 
-function logout() {
-    localStorage.removeItem('currentUser');
-    cart = [];
-    localStorage.removeItem('cart');
-    updateCartCount();
-    updateLoginStatus();
-    showNotification('Successfully logged out!');
-}
+
+

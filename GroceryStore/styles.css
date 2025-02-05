@@ -1,3 +1,18 @@
+/* Variables */
+:root {
+    --primary-color: #387474;
+    --secondary-color: #4a9090;
+    --accent-color: #ff6b6b;
+    --text-color: #333;
+    --light-text: #666;
+    --bg-color: #fff;
+    --light-bg: #f8f9fa;
+    --border-color: #ddd;
+    --success-color: #28a745;
+    --warning-color: #ffc107;
+    --error-color: #dc3545;
+}
+
 /* Reset and base styles */
 * {
     margin: 0;
@@ -14,13 +29,13 @@ body {
 
 /* Enhanced Navbar Styles */
 .navbar {
-    background-color:#387474;
+    background-color:var(--secondary-color);
     padding: 1rem 2rem;
 }
 
 /* Profile page specific navbar style */
 .profile-page .navbar {
-    background-color: white;
+    background-color: var(--success-color);
 }
 
 .nav-links {
@@ -1636,6 +1651,16 @@ footer {
 
 .edit-profile-btn {
     background: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 1rem;
+}
+
+.logout-btn{
+    background: var(--error-color);
     color: white;
     border: none;
     padding: 0.5rem 1rem;
