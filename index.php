@@ -1,4 +1,12 @@
-<!--  -->
+<?php
+session_start();
+if (isset($_SESSION['error'])) {
+    echo "<script>alert('" . $_SESSION['error'] . "');</script>";
+    unset($_SESSION['error']); // Clear the message after displaying
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
@@ -201,7 +209,7 @@
                     <i class="fas fa-shopping-cart"></i>
                     <span id="cartCount">0</span>
                 </button>
-                <button class="login-btn" onclick="toggleLoginForm()">Login</button>
+                <button class="login-btn" id="tloginBtn" onclick="toggleLoginForm();" ></button>
                 <div class="location-picker" onclick="toggleLocationPicker()">
                     <i class="fas fa-map-marker-alt"></i>
                     <span id="currentLocation">Select Location</span>
@@ -391,6 +399,21 @@ Edit
         document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('loginForm').style.display = 'block';
             document.getElementById('registrationForm').style.display = 'none';
+
+            const loginBtn = document.getElementById("tloginBtn");
+            const currentUser = localStorage.getItem('currentUser');
+            
+            if (currentUser) {
+                loginBtn.textContent = 'Logout';
+                loginBtn.onclick = logout;
+                loginBtn.style.backgroundColor = "#dc3545";
+
+            } else {
+                loginBtn.textContent = 'Login';
+                loginBtn.onclick = toggleLoginForm;
+                loginBtn.style.backgroundColor = "#3498db";
+
+            }
         });
 
 
