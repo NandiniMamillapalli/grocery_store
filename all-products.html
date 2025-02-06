@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        /* General Reset */
+
 * {
     margin: 0;
     padding: 0;
@@ -21,7 +21,7 @@ body {
     color: #333;
 }
 
-/* Navbar Styling */
+
 .navbar {
     display: flex;
     justify-content: space-between;
@@ -76,7 +76,7 @@ body {
     background: #2980b9;
 }
 
-/* Navbar Buttons */
+
 .nav-links {
     display: flex;
     align-items: center;
@@ -96,7 +96,7 @@ body {
     color: #3498db;
 }
 
-/* Category Header */
+
 .category-header {
     text-align: center;
     padding: 50px 20px;
@@ -131,7 +131,7 @@ body {
     background: #f5f7fa;
 }
 
-/* Products Grid */
+
 .products {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -141,7 +141,7 @@ body {
     max-width: 1200px;
 }
 
-/* Product Card */
+
 .product-card {
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(15px);
@@ -195,7 +195,6 @@ body {
     background: #2980b9;
 }
 
-/* Cart Modal */
 .modal {
     display: none;
     position: fixed;
@@ -231,7 +230,6 @@ body {
     color: #ff4d4d;
 }
 
-/* Checkout Button */
 .checkout-btn {
     background: #27ae60;
     color: white;
@@ -247,7 +245,6 @@ body {
     background: #218838;
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
     .navbar {
         flex-direction: column;
@@ -308,11 +305,9 @@ body {
         </div>
 
         <section class="products" id="productsContainer">
-            <!-- Products will be loaded dynamically -->
         </section>
     </main>
 
-    <!-- Cart Modal -->
     <div id="cartModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -320,7 +315,6 @@ body {
                 <span class="close" onclick="toggleCart()">&times;</span>
             </div>
             <div id="cartItems" class="cart-items">
-                <!-- Cart items will be displayed here -->
             </div>
             <div class="cart-total">
                 <h3>Total: ₹<span id="cartTotal">0.00</span></h3>
@@ -329,7 +323,6 @@ body {
         </div>
     </div>
 
-    <!-- Quick View Modal -->
     <div id="quickViewModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -337,7 +330,6 @@ body {
                 <span class="close" onclick="closeQuickView()">&times;</span>
             </div>
             <div id="quickViewContent">
-                <!-- Product details will be displayed here -->
             </div>
         </div>
     </div>
