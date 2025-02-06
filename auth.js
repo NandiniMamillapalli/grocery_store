@@ -1,7 +1,4 @@
 console.log("Enters into auth.js")
-// import { logout,fetchUserProfile } from "./profile.js";
-
-
 
 /*
 // Load CSS dynamically in JavaScript
@@ -67,7 +64,7 @@ async function loginUser() {
             updateLoginStatus();
             showNotification('Successfully logged in!');
             document.getElementById('loginModal').style.display = 'none';
-            window.location.href = 'profile.php';
+            // window.location.href = 'profile.php';
         } else {
             alert(data.error || 'Login failed');
         }
@@ -157,7 +154,7 @@ function toggleAuthForms() {
 
 function updateLoginStatus() {
     console.log("updateLoginStatus()")
-    const loginBtn = document.getElementById("loginBtn");
+    const loginBtn = document.getElementById("tloginBtn");
     const currentUser = localStorage.getItem('currentUser');
     
     if (currentUser) {
@@ -174,63 +171,25 @@ function updateLoginStatus() {
 }
 window.updateLoginStatus = updateLoginStatus;
 
-async function fetchUserProfile() {
-    console.log("fetchUserProfile() called");
-
-    // Get the username from localStorage
-    // const username = localStorage.getItem("currentUser");
-
-    const username = localStorage.getItem("inputUser");
-
-    if (!username) {
-        console.log("fetchProfile-failed: No user logged in.");
-        document.getElementById("profileUser").textContent = "Guest";
-        document.getElementById("profileEmail").textContent = "";
-        return;
-    }
-
-    try {
-        const response = await fetch("get_user.php", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ username: username }), // Send username in request body
-        });
-
-        const data = await response.json();
-        console.log("Server Response:", data); // Debugging output
-
-        if (data.success) {
-            console.log("fetchProfile-success");
-            document.getElementById("profileUser").textContent = data.user.username;
-            document.getElementById("profileEmail").textContent = data.user.email;
-        } else {
-            console.log("fetchProfile-failed", data.message);
-            document.getElementById("profileUser").textContent = "Guest";
-            document.getElementById("profileEmail").textContent = "";
-        }
-    } catch (error) {
-        console.error("Error fetching user profile:", error);
-    }
-}
-
-
-window.fetchUserProfile =fetchUserProfile;
 
 function logout() {
     fetch("logout.php") // Call logout script
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                document.getElementById("profileUser").textContent = "Guest";
-                document.getElementById("profileEmail").textContent = "";
+                let profileUser = document.getElementById("profileUser");
+                let profileEmail = document.getElementById("profileEmail");
+
+                // Only update if elements exist
+                if (profileUser) profileUser.textContent = "Guest";
+                if (profileEmail) profileEmail.textContent = "";
+
                 localStorage.removeItem('inputUser');
                 localStorage.removeItem('currentUser');
-                cart = [];
                 localStorage.removeItem('cart');
-                // updateCartCount();
-                // updateLoginStatus();
+
+                cart = [];
+
                 showNotification('Successfully logged out!');
                 window.location.href = "index.php"; 
             }
@@ -238,14 +197,14 @@ function logout() {
         .catch(error => console.error("Error logging out:", error));
 }
 
+
 window.logout = logout;
 
 document.getElementById("loginBtn").addEventListener("click", async function() {
     const loginSuccess = await loginUser(); // Wait for loginUser to complete
-    console.log(loginSuccess);
+    console.log("loginSuccess");
     if (loginSuccess) {
         console.log("Enter into if block");
-        fetchUserProfile(); // Only fetch profile if login is successful
     }
 });
 

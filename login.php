@@ -35,7 +35,7 @@ try {
 
     if (!password_verify($password, $user['password'])) {
         http_response_code(401);
-        echo json_encode(['error' => 'Invalid username or password']);
+        echo json_encode(['error' => 'password mismathed!!']);
         exit;
     }
 

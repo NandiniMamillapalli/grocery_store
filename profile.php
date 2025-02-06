@@ -3,6 +3,7 @@ session_start();
 
 // Check if user is logged in
 if (!isset($_SESSION['user_id'])) {
+    $_SESSION['error'] = 'Sign in to view your profile.';
     header('Location: index.php');
     exit;
 }
@@ -23,8 +24,6 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
     <title>My Profile - Fresh Mart</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <script src="script.js"></script>
-    <script  src="auth.js"></script>
 </head>
 <body class="profile-page">
     <header>
@@ -64,7 +63,6 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
                     <div class="profile-details">
                         <h2 id="profileUser"><?= htmlspecialchars($user['username']); ?></h2>
                         <p id="profileEmail"><?= htmlspecialchars($user['email']); ?></p>
-                        <!-- <button class="edit-profile-btn" onclick="editProfile()">Edit Profile</button> -->
                     </div>
                 </div>
             </section>
@@ -154,6 +152,7 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
         </div>
     </footer>
 
-    
+    <script src="script.js"></script>
+    <script  src="auth.js"></script>
 </body>
 </html>
